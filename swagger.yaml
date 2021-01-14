@@ -1,422 +1,18 @@
 openapi: '3.0.0'
 info:
   version: '1.0.0'
-  title: 'MS-product'
-  description: 'Project MS-product with node.js & mysql'
+  title: 'World'
+  description: 'Project World with node.js & mysql'
   contact:
-    email: '1@makor-capital.com'
+    email: 'ehilel@makor-capital.com'
 servers:
-  - url: 'https://api-product.enigma-securities.io'
-    description: 'PROD server'
-  - url: 'https://auth.enigma-securities.io'
-    description: 'PROD auth server'
-  - url: 'http://localhost:8087'
+  - url: 'http://localhost:8060'
     description: 'LOCAL server'
 tags:
-  - name: 'auth'
-  - name: 'product'
-  - name: 'provider'
-  - name: 'type'
-  - name: 'instrument'
-  - name: 'asset'
-  - name: 'currency'
-  - name: 'exchange'
-  - name: 'utils'
+  - name: 'city'
+  - name: 'country'
+  - name: 'country language'
 paths:
-  /auth:
-    put:
-      tags:
-        - 'auth'
-      summary: 'Create auth'
-      description: 'auth from external server'
-      operationId: 'createAuth'
-      requestBody:
-        description: Login to the site
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Auth'
-      responses:
-        '200':
-          description: 'Successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserLogin'
-        '400':
-          description: 'Bad Request'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-  /product:
-    post:
-      tags:
-        - 'product'
-      summary: 'Create product'
-      description: ''
-      operationId: 'createProduct'
-      requestBody:
-        description: Insert product details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/product_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    get:
-      tags:
-        - 'product'
-      summary: 'Finds all products'
-      description: 'get all products'
-      operationId: 'getProducts'
-      parameters:
-        - in: header
-          name: bearerAuth
-          schema:
-            type: string
-        - name: 'limit'
-          in: 'query'
-          required: false
-          schema:
-            type: integer
-        - name: 'offset'
-          in: 'query'
-          required: false
-          schema:
-            type: integer
-        - name: 'filter_electronic'
-          in: 'query'
-          required: false
-          schema:
-            type: boolean
-          description: >
-            boolean:
-             * `true`
-             * `false`
-        - name: 'filter_asset'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          description: >
-            Asset:
-             * `1 = equity`
-             * `2 = fixed income`
-             * `3 = fx`
-             * `2 = commodity`
-        - name: 'filter_type'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          description: >
-            Type:
-             * `1 = cash`
-             * `2 = derivative`
-        - name: 'filter_sub_type'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          description: >
-            Type:
-             * `3 = 'single name`
-             * `4 = index`
-             * `5 = future`
-             * `6 = forward`
-             * `7 = vanilla`
-             * `8 = exotic`
-             * `9 = swap`
-             * `10 = repo`
-        - name: 'search'
-          in: query
-          description: 'by string'
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/product'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /product/{id}:
-    get:
-      tags:
-        - 'product'
-      summary: 'Find product by ID'
-      description: 'Returns a single product'
-      operationId: 'getProductById'
-      parameters:
-        - in: path
-          name: id
-          description: The product id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/product'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    put:
-      tags:
-        - 'product'
-      summary: 'Update an existing product'
-      description: ''
-      operationId: 'updateProduct'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Id of product'
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: insert product content
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/product_update'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    delete:
-      tags:
-        - 'product'
-      summary: 'Delete a product'
-      description: ''
-      operationId: 'deleteProduct'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'product id to delete'
-          required: true
-          schema:
-            type: 'string'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /provider:
-    post:
-      tags:
-        - 'provider'
-      summary: 'Create provider'
-      description: ''
-      operationId: 'createProvider'
-      requestBody:
-        description: Insert provider details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/provider_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    get:
-      tags:
-        - 'provider'
-      summary: 'Finds all providers'
-      description: 'get all providers'
-      operationId: 'getProviders'
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/provider'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /provider/{id}:
-    get:
-      tags:
-        - 'provider'
-      summary: 'Find provider by ID'
-      description: 'Returns a single provider'
-      operationId: 'getProviderById'
-      parameters:
-        - in: path
-          name: id
-          description: The provider id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/provider'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    put:
-      tags:
-        - 'provider'
-      summary: 'Update an existing provider'
-      description: ''
-      operationId: 'updateProvider'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Id of provider'
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: insert provider content
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/provider_update'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    delete:
-      tags:
-        - 'provider'
-      summary: 'Delete a provider'
-      description: ''
-      operationId: 'deleteProvider'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'provider id to delete'
-          required: true
-          schema:
-            type: 'string'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
   /type:
     post:
       tags:
@@ -442,8 +38,6 @@ paths:
           description: 'Forbidden'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     get:
       tags:
         - 'type'
@@ -472,8 +66,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
   /type/{id}:
     get:
       tags:
@@ -505,8 +97,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     put:
       tags:
         - 'type'
@@ -540,8 +130,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     delete:
       tags:
         - 'type'
@@ -568,8 +156,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
   /instrument:
     post:
       tags:
@@ -595,48 +181,12 @@ paths:
           description: 'Forbidden'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     get:
       tags:
         - 'instrument'
       summary: 'Finds all instruments'
       description: 'get all instruments'
       operationId: 'getInstruments'
-      parameters:
-        - in: header
-          name: bearerAuth
-          schema:
-            type: string
-        - name: 'limit'
-          in: 'query'
-          required: false
-          schema:
-            type: integer
-        - name: 'offset'
-          in: 'query'
-          required: false
-          schema:
-            type: integer
-        - name: 'filter_asset'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          description: >
-            Asset:
-             * `1 = equity`
-             * `2 = fixed income`
-             * `3 = fx`
-             * `2 = commodity`
-        - name: 'search'
-          in: query
-          description: 'by string'
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: 'successful operation'
@@ -654,8 +204,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
   /instrument/{id}:
     get:
       tags:
@@ -687,8 +235,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     put:
       tags:
         - 'instrument'
@@ -722,8 +268,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     delete:
       tags:
         - 'instrument'
@@ -750,8 +294,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
   /exchange:
     post:
       tags:
@@ -777,8 +319,6 @@ paths:
           description: 'Forbidden'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     get:
       tags:
         - 'exchange'
@@ -807,8 +347,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
   /exchange/{id}:
     get:
       tags:
@@ -840,8 +378,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     put:
       tags:
         - 'exchange'
@@ -875,8 +411,6 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
     delete:
       tags:
         - 'exchange'
@@ -903,352 +437,7 @@ paths:
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /asset:
-    post:
-      tags:
-        - 'asset'
-      summary: 'Create asset'
-      description: ''
-      operationId: 'createAsset'
-      requestBody:
-        description: Insert asset details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/asset_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    get:
-      tags:
-        - 'asset'
-      summary: 'Finds all assets'
-      description: 'get all assets'
-      operationId: 'getAssets'
-      parameters:
-        - in: header
-          name: bearerAuth
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/asset'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /asset/{id}:
-    get:
-      tags:
-        - 'asset'
-      summary: 'Find asset by ID'
-      description: 'Returns a single asset'
-      operationId: 'getAssetById'
-      parameters:
-        - in: path
-          name: id
-          description: The asset id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/asset'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    put:
-      tags:
-        - 'asset'
-      summary: 'Update an existing asset'
-      description: ''
-      operationId: 'updateAsset'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Id of asset'
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: insert asset content
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/asset_update'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    delete:
-      tags:
-        - 'asset'
-      summary: 'Delete a asset'
-      description: ''
-      operationId: 'deleteAsset'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'asset id to delete'
-          required: true
-          schema:
-            type: 'string'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /currency:
-    post:
-      tags:
-        - 'currency'
-      summary: 'Create currency'
-      description: ''
-      operationId: 'createCurrency'
-      requestBody:
-        description: Insert currency details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/currency_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    get:
-      tags:
-        - 'currency'
-      summary: 'Finds all currencies'
-      description: 'get all currencies'
-      operationId: 'getCurrencies'
-      parameters:
-        - in: header
-          name: bearerAuth
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/currency'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /currency/{id}:
-    get:
-      tags:
-        - 'currency'
-      summary: 'Find currency by ID'
-      description: 'Returns a single currency'
-      operationId: 'getCurrencyById'
-      parameters:
-        - in: path
-          name: id
-          description: The currency id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/currency'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    put:
-      tags:
-        - 'currency'
-      summary: 'Update an existing currency'
-      description: ''
-      operationId: 'updateCurrency'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Id of currency'
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: insert currency content
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/currency_update'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-    delete:
-      tags:
-        - 'currency'
-      summary: 'Delete a currency'
-      description: ''
-      operationId: 'deleteCurrency'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'currency id to delete'
-          required: true
-          schema:
-            type: 'string'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
-  /utils:
-    get:
-      tags:
-        - 'utils'
-      operationId: 'getUtils'
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/utils'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-      security:
-        - bearerAuth: []
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    OAuth2:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://localhost:8080
-          scopes:
-            '1': Grants access to admin operations
-            '2': Grants use access
   schemas:
     Auth:
       description: Auth object
