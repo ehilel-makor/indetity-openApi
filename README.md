@@ -9,25 +9,25 @@
 
 ### step 1
 
-> git clone https://github.com/ehilel-makor/indetity-openApi.git
+> Run: `git clone https://github.com/ehilel-makor/indetity-openApi.git`
 
 ### step 2
 
-add data to sql server from sql_data file
+add data to sql server from `indetity-openApi\sql_data`
 
 ### step 3
 
-change \_env to .env with correct data details
+change `_env` to `.env` with correct data details
 
 ### step 4
 
-> run npm start
+> Run: `npm start`
 
 ## The server is currently working, we will now add a post request to create data
 
 ### step 5
 
-> Add to indetity-openApi\swagger.yaml file under /indetity path
+> Add to `indetity-openApi\swagger.yaml` file under /indetity path
 
 ```
 
@@ -54,7 +54,7 @@ change \_env to .env with correct data details
 
 ### step 6
 
-> Add to indetity-openApi\swagger.yaml file under components / schemas
+> Add to `indetity-openApi\swagger.yaml` file under components / schemas
 
 ```
 
@@ -81,7 +81,7 @@ change \_env to .env with correct data details
 
 ### step 7
 
-run:
+Run:
 
 ```
 java -jar openapi-generator-cli.jar generate -i swagger.yaml -t templates\nodejs-express-server -g nodejs-express-server
@@ -89,11 +89,11 @@ java -jar openapi-generator-cli.jar generate -i swagger.yaml -t templates\nodejs
 
 Or use the command that appears in the project
 
-> run_swagger.cmd
+> `run_swagger.cmd`
 
 ### step 8
 
-> Add to indetity-openApi\server_generate\models\Identity.js file
+> Add to `indetity-openApi\server_generate\models\Identity.js`:
 
 ```
 //create identity
@@ -107,4 +107,6 @@ Identity.createIdentity = async (payload, result) => {
 };
 ```
 
-> Congratulations we have a server with full CRUD working
+> Congratulations we have a server with full CRUD working on: http://localhost:8000/api-docs/
+
+![alt text](https://github.com/ehilel-makor/indetity-openApi/blob/main/identityOpenApi.png?raw=true)
