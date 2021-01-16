@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: ehilel@makor-capital.com
+  description: Project Identity with node.js & mysql
+  title: Identity
+  version: 1.0.0
+servers:
+- description: LOCAL server
+  url: http://localhost:8000
+tags:
+- name: identity
+paths:
+  /identity:
+    get:
+      description: get all identities
+      operationId: getIdentities
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: successful operation
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Finds all identities
+      tags:
+      - identity
+      x-eov-operation-handler: controllers/IdentityController
+  /identity/{id}:
+    delete:
+      operationId: deleteIdentity
+      parameters:
+      - description: identity id to delete
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Delete a identity
+      tags:
+      - identity
+      x-eov-operation-handler: controllers/IdentityController
+    get:
+      description: Returns a single identity
+      operationId: getIdentityById
+      parameters:
+      - description: The identity id
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: successful operation
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Find identity by ID
+      tags:
+      - identity
+      x-eov-operation-handler: controllers/IdentityController
+    put:
+      operationId: updateIdentity
+      parameters:
+      - description: Id of identity
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/identity_update'
+        description: insert identity content
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Update an existing identity
+      tags:
+      - identity
+      x-eov-operation-handler: controllers/IdentityController
+components:
+  schemas:
+    identity:
+      example:
+        gender: gender
+        last_name: last_name
+        id: 0
+        ip_address: ip_address
+        first_name: first_name
+        email: email
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        ip_address:
+          type: string
+      type: object
+    identity_update:
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        ip_address:
+          type: string
+      type: object

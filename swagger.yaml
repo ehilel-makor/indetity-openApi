@@ -1,82 +1,47 @@
 openapi: '3.0.0'
 info:
   version: '1.0.0'
-  title: 'World'
-  description: 'Project World with node.js & mysql'
+  title: 'Identity'
+  description: 'Project Identity with node.js & mysql'
   contact:
     email: 'ehilel@makor-capital.com'
 servers:
-  - url: 'http://localhost:8060'
+  - url: 'http://localhost:8000'
     description: 'LOCAL server'
 tags:
-  - name: 'city'
-  - name: 'country'
-  - name: 'country language'
+  - name: 'identity'
 paths:
-  /type:
-    post:
-      tags:
-        - 'type'
-      summary: 'Create type'
-      description: ''
-      operationId: 'createType'
-      requestBody:
-        description: Insert type details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/type_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
+  /identity:
     get:
       tags:
-        - 'type'
-      summary: 'Finds all types'
-      description: 'get all types'
-      operationId: 'getTypes'
-      parameters:
-        - in: header
-          name: bearerAuth
-          schema:
-            type: string
+        - 'identity'
+      summary: 'Finds all identities'
+      description: 'get all identities'
+      operationId: 'getIdentities'
       responses:
         '200':
           description: 'successful operation'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type'
+                $ref: '#/components/schemas/identity'
         '400':
           description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
         '404':
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
-  /type/{id}:
+  /identity/{id}:
     get:
       tags:
-        - 'type'
-      summary: 'Find type by ID'
-      description: 'Returns a single type'
-      operationId: 'getTypeById'
+        - 'identity'
+      summary: 'Find identity by ID'
+      description: 'Returns a single identity'
+      operationId: 'getIdentityById'
       parameters:
         - in: path
           name: id
-          description: The type id
+          description: The identity id
           required: true
           schema:
             type: string
@@ -86,60 +51,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/type'
+                $ref: '#/components/schemas/identity'
         '400':
           description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
         '404':
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
     put:
       tags:
-        - 'type'
-      summary: 'Update an existing type'
-      description: ''
-      operationId: 'updateType'
+        - 'identity'
+      summary: 'Update an existing identity'
+      operationId: 'updateIdentity'
       parameters:
         - name: 'id'
           in: 'path'
-          description: 'Id of type'
+          description: 'Id of identity'
           required: true
           schema:
             type: string
       requestBody:
-        description: insert type content
+        description: insert identity content
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/type_update'
+              $ref: '#/components/schemas/identity_update'
       responses:
         '200':
           description: 'Successful operation'
         '400':
           description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
         '404':
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
     delete:
       tags:
-        - 'type'
-      summary: 'Delete a type'
-      description: ''
-      operationId: 'deleteType'
+        - 'identity'
+      summary: 'Delete a identity'
+      operationId: 'deleteIdentity'
       parameters:
         - name: 'id'
           in: 'path'
-          description: 'type id to delete'
+          description: 'identity id to delete'
           required: true
           schema:
             type: 'string'
@@ -148,558 +103,37 @@ paths:
           description: 'Successful operation'
         '400':
           description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-  /instrument:
-    post:
-      tags:
-        - 'instrument'
-      summary: 'Create instrument'
-      description: ''
-      operationId: 'createInstrument'
-      requestBody:
-        description: Insert instrument details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instrument_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
-    get:
-      tags:
-        - 'instrument'
-      summary: 'Finds all instruments'
-      description: 'get all instruments'
-      operationId: 'getInstruments'
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instrument'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-  /instrument/{id}:
-    get:
-      tags:
-        - 'instrument'
-      summary: 'Find instrument by ID'
-      description: 'Returns a single instrument'
-      operationId: 'getInstrumentById'
-      parameters:
-        - in: path
-          name: id
-          description: The instrument id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/instrument'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-    put:
-      tags:
-        - 'instrument'
-      summary: 'Update an existing instrument'
-      description: ''
-      operationId: 'updateInstrument'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Id of instrument'
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: insert instrument content
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/instrument_update'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-    delete:
-      tags:
-        - 'instrument'
-      summary: 'Delete a instrument'
-      description: ''
-      operationId: 'deleteInstrument'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'instrument id to delete'
-          required: true
-          schema:
-            type: 'string'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-  /exchange:
-    post:
-      tags:
-        - 'exchange'
-      summary: 'Create exchange'
-      description: ''
-      operationId: 'createExchange'
-      requestBody:
-        description: Insert exchange details
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/exchange_create'
-      responses:
-        '201':
-          description: 'Created'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '500':
-          description: 'Internal Server Error'
-    get:
-      tags:
-        - 'exchange'
-      summary: 'Finds all exchanges'
-      description: 'get all exchanges'
-      operationId: 'getExchanges'
-      parameters:
-        - in: header
-          name: bearerAuth
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exchange'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-  /exchange/{id}:
-    get:
-      tags:
-        - 'exchange'
-      summary: 'Find exchange by ID'
-      description: 'Returns a single exchange'
-      operationId: 'getExchangeById'
-      parameters:
-        - in: path
-          name: id
-          description: The exchange id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/exchange'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-    put:
-      tags:
-        - 'exchange'
-      summary: 'Update an existing exchange'
-      description: ''
-      operationId: 'updateExchange'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'Id of exchange'
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: insert exchange content
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/exchange_update'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
-        '404':
-          description: 'Not Found'
-        '500':
-          description: 'Internal Server Error'
-    delete:
-      tags:
-        - 'exchange'
-      summary: 'Delete a exchange'
-      description: ''
-      operationId: 'deleteExchange'
-      parameters:
-        - name: 'id'
-          in: 'path'
-          description: 'exchange id to delete'
-          required: true
-          schema:
-            type: 'string'
-      responses:
-        '200':
-          description: 'Successful operation'
-        '400':
-          description: 'Bad Request'
-        '401':
-          description: 'Unauthorized'
-        '403':
-          description: 'Forbidden'
         '404':
           description: 'Not Found'
         '500':
           description: 'Internal Server Error'
 components:
   schemas:
-    Auth:
-      description: Auth object
-      type: object
-      properties:
-        username:
-          type: string
-          example: 'jonathan'
-        password:
-          type: string
-          example: 'Makor271081!'
-      required:
-        - username
-        - password
-    UserLogin:
-      type: object
-      properties:
-        name:
-          type: string
-        avatar:
-          type: string
-        token:
-          type: string
-    product:
+    identity:
       type: object
       properties:
         id:
+          type: integer
+        first_name:
           type: string
-        instrument_id:
+        last_name:
           type: string
-        type_id:
+        email:
           type: string
-        exchange_id:
+        gender:
           type: string
-        is_active:
-          type: boolean
-        is_electronic:
-          type: boolean
-        providers:
-          type: array
-          items:
-            type: integer
-        created_at:
+        ip_address:
           type: string
-    product_create:
+    identity_update:
       type: object
       properties:
-        instrument_id:
+        first_name:
           type: string
-        type_id:
+        last_name:
           type: string
-        exchange_id:
+        email:
           type: string
-        is_active:
-          type: boolean
-        is_electronic:
-          type: boolean
-        providers:
-          type: array
-          items:
-            type: integer
-    product_update:
-      type: object
-      properties:
-        instrument_id:
+        gender:
           type: string
-        type_id:
+        ip_address:
           type: string
-        exchange_id:
-          type: string
-        is_active:
-          type: boolean
-        is_electronic:
-          type: boolean
-        providers:
-          type: array
-          items:
-            type: integer
-    provider:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        created_at:
-          type: string
-    provider_create:
-      type: object
-      properties:
-        name:
-          type: string
-    provider_update:
-      type: object
-      properties:
-        name:
-          type: string
-    type:
-      type: object
-      properties:
-        id:
-          type: string
-        parent_type_id:
-          type: string
-        name:
-          type: string
-        created_at:
-          type: string
-    type_create:
-      type: object
-      properties:
-        parent_type_id:
-          type: string
-        name:
-          type: string
-    type_update:
-      type: object
-      properties:
-        parent_type_id:
-          type: string
-        name:
-          type: string
-    instrument:
-      type: object
-      properties:
-        id:
-          type: string
-        asset_id:
-          type: string
-        name:
-          type: string
-        base_currency_id:
-          type: string
-        quote_currency_id:
-          type: string
-        created_at:
-          type: string
-    instrument_create:
-      type: object
-      properties:
-        asset_id:
-          type: string
-        name:
-          type: string
-        base_currency_id:
-          type: string
-        quote_currency_id:
-          type: string
-    instrument_update:
-      type: object
-      properties:
-        asset_id:
-          type: string
-        name:
-          type: string
-        base_currency_id:
-          type: string
-        quote_currency_id:
-          type: string
-    asset:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        created_at:
-          type: string
-    asset_create:
-      type: object
-      properties:
-        name:
-          type: string
-    asset_update:
-      type: object
-      properties:
-        name:
-          type: string
-    exchange:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        mic:
-          type: string
-        is_active:
-          type: boolean
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        deleted_at:
-          type: string
-    exchange_create:
-      type: object
-      properties:
-        name:
-          type: string
-        mic:
-          type: string
-        is_active:
-          type: boolean
-    exchange_update:
-      type: object
-      properties:
-        name:
-          type: string
-        mic:
-          type: string
-        is_active:
-          type: boolean
-        deleted_at:
-          type: string
-    currency:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        code:
-          type: string
-        is_active:
-          type: boolean
-        created_at:
-          type: string
-        deleted_at:
-          type: string
-    currency_create:
-      type: object
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-        is_active:
-          type: boolean
-        deleted_at:
-          type: string
-    currency_update:
-      type: object
-      properties:
-        name:
-          type: string
-        code:
-          type: string
-        is_active:
-          type: boolean
-        deleted_at:
-          type: string
-    utils:
-      type: object
-      properties:
-        assets:
-          type: object
-        types:
-          type: object
-        currencies:
-          type: object
-        exchanges:
-          type: object
-        providers:
-          type: object
