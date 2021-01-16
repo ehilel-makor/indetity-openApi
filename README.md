@@ -1,5 +1,3 @@
-# identity project
-
 # Sample code documentation
 
 ### prerequisites
@@ -12,8 +10,7 @@
 ### step 1
 
 > git clone https://github.com/ehilel-makor/indetity-openApi.git
-
-{.is-info}
+> {.is-info}
 
 ### step 2
 
