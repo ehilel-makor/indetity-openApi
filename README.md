@@ -10,7 +10,6 @@
 ### step 1
 
 > git clone https://github.com/ehilel-makor/indetity-openApi.git
-> {.is-info}
 
 ### step 2
 
@@ -23,14 +22,12 @@ change \_env to .env with correct data details
 ### step 4
 
 > run npm start
-> {.is-info}
 
 ## The server is currently working, we will now add a post request to create data
 
 ### step 5
 
 > Add to indetity-openApi\swagger.yaml file under /indetity path
-> {.is-info}
 
 ```
 
@@ -58,7 +55,6 @@ change \_env to .env with correct data details
 ### step 6
 
 > Add to indetity-openApi\swagger.yaml file under components / schemas
-> {.is-info}
 
 ```
 
@@ -94,12 +90,10 @@ java -jar openapi-generator-cli.jar generate -i swagger.yaml -t templates\nodejs
 Or use the command that appears in the project
 
 > run_swagger.cmd
-> {.is-info}
 
 ### step 8
 
 > Add to indetity-openApi\server_generate\models\Identity.js file
-> {.is-info}
 
 ```
 //create identity
