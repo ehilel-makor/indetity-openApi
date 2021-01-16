@@ -23,13 +23,15 @@ DROP TABLE IF EXISTS `detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `detail` (
-  `id` int DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `gender` varchar(50) DEFAULT NULL,
-  `ip_address` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ip_address` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +40,7 @@ CREATE TABLE `detail` (
 
 LOCK TABLES `detail` WRITE;
 /*!40000 ALTER TABLE `detail` DISABLE KEYS */;
-INSERT INTO `detail` VALUES (1,'Dewain','Itzchaki','ditzchaki0@census.gov','Male','64.230.121.163'),(2,'Terese','Stoll','tstoll1@t.co','Female','130.168.69.237'),(3,'Page','Eyre','peyre2@e-recht24.de','Female','174.139.3.6'),(4,'Eal','Drinkale','edrinkale3@earthlink.net','Male','92.192.7.137'),(5,'Karim','Houlison','khoulison4@joomla.org','Male','179.215.56.45'),(6,'Nataline','Lailey','nlailey5@list-manage.com','Female','185.51.9.1'),(7,'Stearne','Matysik','smatysik6@wisc.edu','Male','141.142.50.149'),(8,'Jacob','Goudard','jgoudard7@t-online.de','Male','152.245.194.154'),(9,'Gunter','McGinnell','gmcginnell8@cargocollective.com','Male','190.0.240.167'),(10,'Claudio','Andriesse','candriesse9@bloomberg.com','Male','225.237.221.92'),(11,'Grover','Gildea','ggildeaa@ning.com','Male','107.33.112.5'),(12,'Charleen','Lince','clinceb@slate.com','Female','14.90.82.142'),(13,'Ruby','Garza','rgarzac@npr.org','Female','34.188.152.155'),(14,'Mala','Amps','mampsd@mit.edu','Female','98.63.79.138'),(15,'Rabbi','Brissard','rbrissarde@about.me','Male','175.62.195.7'),(16,'Serene','Mackness','smacknessf@spiegel.de','Female','116.67.169.191'),(17,'Phelia','Groom','pgroomg@upenn.edu','Female','69.13.25.133');
+INSERT INTO `detail` VALUES (1,'Dewain','Itzchaki','ditzchaki0@census.gov','Male','64.230.121.164'),(2,'Terese','Stoll','tstoll1@t.co','Female','130.168.69.237'),(3,'Page','Eyre','peyre2@e-recht24.de','Female','174.139.3.6'),(4,'Eal','Drinkale','edrinkale3@earthlink.net','Male','92.192.7.137'),(5,'Karim','Houlison','khoulison4@joomla.org','Male','179.215.56.45'),(6,'Nataline','Lailey','nlailey5@list-manage.com','Female','185.51.9.1'),(7,'Stearne','Matysik','smatysik6@wisc.edu','Male','141.142.50.149'),(8,'Jacob','Goudard','jgoudard7@t-online.de','Male','152.245.194.154'),(9,'Gunter','McGinnell','gmcginnell8@cargocollective.com','Male','190.0.240.167'),(10,'Claudio','Andriesse','candriesse9@bloomberg.com','Male','225.237.221.92'),(11,'Grover','Gildea','ggildeaa@ning.com','Male','107.33.112.5'),(12,'Charleen','Lince','clinceb@slate.com','Female','14.90.82.142'),(13,'Ruby','Garza','rgarzac@npr.org','Female','34.188.152.155'),(14,'Mala','Amps','mampsd@mit.edu','Female','98.63.79.138'),(15,'Rabbi','Brissard','rbrissarde@about.me','Male','175.62.195.7'),(16,'Serene','Mackness','smacknessf@spiegel.de','Female','116.67.169.191'),(17,'Phelia','Groom','pgroomg@upenn.edu','Female','69.13.25.133'),(18,'Tallia','Craik','tcraik0@tinypic.com','Female','119.25.96.30');
 /*!40000 ALTER TABLE `detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-16 21:30:17
+-- Dump completed on 2021-01-16 23:03:30
