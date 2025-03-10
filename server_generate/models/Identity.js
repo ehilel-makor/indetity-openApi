@@ -1,18 +1,13 @@
 const dbHelper = require('../db/dbHelper.js')
 const query = require('../sql/queries/global.js')
 
-
-// constructor
 const Identity = () => { };
-
 
 Identity.createIdentity = async (payload, result) => {
   try {
     const res = await dbHelper.execute(query.insert('detail', payload.body), payload.body)
     return result({ status: 201, data: res })
   } catch (error) {
-    console.log({ error });
-
     if (error.status) {
       return result(error)
     }
@@ -20,12 +15,9 @@ Identity.createIdentity = async (payload, result) => {
   }
 }
 
-//get all identity
 Identity.getIdentities = async (payload, result) => {
   try {
     const res = await dbHelper.get(query.get('detail'))
-    console.log({ res });
-
     return result({ status: 200, data: res })
   } catch (error) {
     if (error.status) {
@@ -35,7 +27,6 @@ Identity.getIdentities = async (payload, result) => {
   }
 };
 
-//get identity by id
 Identity.getIdentityById = async (payload, result) => {
   try {
     const { id } = payload;
@@ -49,7 +40,6 @@ Identity.getIdentityById = async (payload, result) => {
   }
 };
 
-//update identity
 Identity.updateIdentity = async (payload, result) => {
   try {
     const { id } = payload;
@@ -63,7 +53,6 @@ Identity.updateIdentity = async (payload, result) => {
   }
 };
 
-//delete identity
 Identity.deleteIdentity = async (payload, result) => {
   try {
     const { id } = payload;

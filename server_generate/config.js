@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const config = {
   ROOT_DIR: __dirname,
-  URL_PORT: process.env.APP_PORT || 8000,
+  URL_PORT: process.env.APP_PORT,
   URL_PATH: process.env.APP_URL,
   BASE_VERSION: '',
   CONTROLLER_DIRECTORY: path.join(__dirname, 'controllers'),

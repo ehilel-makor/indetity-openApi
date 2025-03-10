@@ -96,15 +96,17 @@ Or use the command that appears in the project
 > Add to `indetity-openApi\server_generate\models\Identity.js`:
 
 ```
-//create identity
 Identity.createIdentity = async (payload, result) => {
-  const query_str = await create_query_str(payload.identityCreate, 'detail');
-  if (query_str) {
-    const { res, err } = await update_in_data_base(query_str);
-    if (err) return result({ status: 404, code: '4.1' });
+  try {
+    const res = await dbHelper.execute(query.insert('detail', payload.body), payload.body)
+    return result({ status: 201, data: res })
+  } catch (error) {
+    if (error.status) {
+      return result(error)
+    }
+    return result({ status: 500 })
   }
-  return result(null, { code: '2.1' });
-};
+}
 ```
 
 > Congratulations we have a server with full CRUD working on: http://localhost:8000/api-docs/

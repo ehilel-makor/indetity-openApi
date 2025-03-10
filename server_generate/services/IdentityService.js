@@ -35,8 +35,6 @@ const deleteIdentity = (payload, res) =>
 const getIdentities = (payload, res) =>
   new Promise((resolve) => {
     model.getIdentities(payload, ({ data, status }) => {
-      console.log({ payload });
-
       resolve(Service.successResponse(data, status || 500))
     }, res)
   })
