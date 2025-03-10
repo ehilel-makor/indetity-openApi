@@ -12,6 +12,25 @@ tags:
   - name: 'identity'
 paths:
   /identity:
+    post:
+      tags:
+        - 'identity'
+      summary: 'Create identity'
+      operationId: 'createIdentity'
+      requestBody:
+        description: Insert identity details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/identity_create'
+      responses:
+        '201':
+          description: 'Created'
+        '400':
+          description: 'Bad Request'
+        '500':
+          description: 'Internal Server Error'
     get:
       tags:
         - 'identity'
@@ -124,6 +143,25 @@ components:
           type: string
         ip_address:
           type: string
+    identity_create:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        ip_address:
+          type: string
+      required:
+        - first_name
+        - last_name
+        - email
+        - gender
+        - ip_address
     identity_update:
       type: object
       properties:

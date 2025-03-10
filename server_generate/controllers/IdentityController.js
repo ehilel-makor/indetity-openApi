@@ -8,6 +8,10 @@
 
 const Controller = require('./Controller');
 const service = require('../services/IdentityService');
+const createIdentity = async (request, response) => {
+  await Controller.handleRequest(request, response, service.createIdentity);
+};
+
 const deleteIdentity = async (request, response) => {
   await Controller.handleRequest(request, response, service.deleteIdentity);
 };
@@ -26,6 +30,7 @@ const updateIdentity = async (request, response) => {
 
 
 module.exports = {
+  createIdentity,
   deleteIdentity,
   getIdentities,
   getIdentityById,

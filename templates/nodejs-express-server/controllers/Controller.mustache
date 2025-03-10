@@ -68,45 +68,83 @@ class Controller {
     return 'body';
   }
 
-  static collectRequestParams(request) {
-    const requestParams = {};
-    if (request.openapi.schema.requestBody !== undefined) {
-      const { content } = request.openapi.schema.requestBody;
+  // static collectRequestParams(request) {
+  //   const requestParams = {};
+  //   if (request.openapi.schema.requestBody !== undefined) {
+  //     const { content } = request.openapi.schema.requestBody;
+  //     if (content['application/json'] !== undefined) {
+  //       const requestBodyName = camelCase(this.getRequestBodyName(request));
+  //       requestParams[requestBodyName] = request.body;
+  //     } else if (content['multipart/form-data'] !== undefined) {
+  //       Object.keys(content['multipart/form-data'].schema.properties).forEach(
+  //         (property) => {
+  //           const propertyObject = content['multipart/form-data'].schema.properties[property];
+  //           if (propertyObject.format !== undefined && propertyObject.format === 'binary') {
+  //             requestParams[property] = this.collectFile(request, property);
+  //           } else {
+  //             requestParams[property] = request.body[property];
+  //           }
+  //         },
+  //       );
+  //     }
+  //   }
+
+  //   request.openapi.schema.parameters.forEach((param) => {
+  //     if (param.in === 'path') {
+  //       requestParams[param.name] = request.openapi.pathParams[param.name];
+  //     } else if (param.in === 'query') {
+  //       requestParams[param.name] = request.query[param.name];
+  //     } else if (param.in === 'header') {
+  //       requestParams[param.name] = request.headers[param.name];
+  //     }
+  //   });
+  //   return requestParams;
+  // }
+
+
+
+  static async collectRequestParams(request) {
+    const requestParams = {}
+    if (request.openapi.schema.requestBody) {
+      const { content } = request.openapi.schema.requestBody
       if (content['application/json'] !== undefined) {
-        const requestBodyName = camelCase(this.getRequestBodyName(request));
-        requestParams[requestBodyName] = request.body;
+        const requestBodyName = camelCase(this.getRequestBodyName(request))
+        requestParams[requestBodyName] = request.body
       } else if (content['multipart/form-data'] !== undefined) {
-        Object.keys(content['multipart/form-data'].schema.properties).forEach(
-          (property) => {
-            const propertyObject = content['multipart/form-data'].schema.properties[property];
-            if (propertyObject.format !== undefined && propertyObject.format === 'binary') {
-              requestParams[property] = this.collectFile(request, property);
-            } else {
-              requestParams[property] = request.body[property];
-            }
-          },
-        );
+        Object.keys(content['multipart/form-data'].schema.properties).forEach((property) => {
+          const propertyObject = content['multipart/form-data'].schema.properties[property]
+          if (propertyObject.format !== undefined && propertyObject.format === 'binary') {
+            requestParams[property] = this.collectFile(request, property)
+          } else {
+            requestParams[property] = request.body[property]
+          }
+        })
       }
     }
 
-    request.openapi.schema.parameters.forEach((param) => {
-      if (param.in === 'path') {
-        requestParams[param.name] = request.openapi.pathParams[param.name];
-      } else if (param.in === 'query') {
-        requestParams[param.name] = request.query[param.name];
-      } else if (param.in === 'header') {
-        requestParams[param.name] = request.headers[param.name];
-      }
-    });
-    return requestParams;
+    if (request.openapi.schema.parameters) {
+      request.openapi.schema.parameters.forEach((param) => {
+        if (param.in === 'path') {
+          requestParams[param.name] = request.openapi.pathParams[param.name]
+        } else if (param.in === 'query') {
+          requestParams[param.name] = request.query[param.name]
+        } else if (param.in === 'header') {
+          requestParams[param.name] = request.headers[param.name]
+        }
+      })
+    }
+    return requestParams
   }
 
-  static async handleRequest(request, response, serviceOperation) {
+
+  static async handleRequest (request, response, serviceOperation) {
     try {
-      const serviceResponse = await serviceOperation(this.collectRequestParams(request));
-      Controller.sendResponse(response, serviceResponse);
+      const parameters = await this.collectRequestParams(request)
+      const serviceResponse = await serviceOperation(parameters, response)
+      Controller.sendResponse(response, serviceResponse)
     } catch (error) {
-      Controller.sendError(response, error);
+      const { status, message } = error
+      response.status(status || 500).json({ message })
     }
   }
 }

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-const model = require('../models/{{{classname}}}');
-const Service = require('./Service');
+const model = require('../models/{{{classname}}}')
+const Service = require('./Service')
 
 {{#operations}}
 {{#operation}}
-/**
+/*
 {{#summary}}
 * {{{summary}}}
 {{/summary}}
@@ -13,7 +13,7 @@ const Service = require('./Service');
 {{/notes}}
 *
 {{#allParams}}
-* {{paramName}} {{{dataType}}} {{{description}}}{{^required}} (optional){{/required}}
+* {{paramName}} {{{dataType}}} {{{description}}}{{^required}}(optional){{/required}}
 {{/allParams}}
 {{^returnType}}
 * no response value expected for this operation
@@ -21,15 +21,13 @@ const Service = require('./Service');
 {{#returnType}}
 * returns {{{returnType}}}
 {{/returnType}}
-* */
-const {{{operationId}}} = ( payload ) => 
-  new Promise(async (resolve, reject) => {
-    model.{{operationId}}( payload, (error, data) => {
-      error
-        ? reject(Service.rejectResponse(error.status || 500, error.code || '5.0'))
-        : resolve(Service.successResponse(data));
-    });  
-  });
+*/
+const {{{operationId}}} = (payload, res) =>
+  new Promise((resolve) => {
+    model.{{operationId}}(payload, ({ data, status }) => {
+      resolve(Service.successResponse(data, status || 500))
+    }, res)
+  })
 {{/operation}}
 {{/operations}}
 
@@ -39,4 +37,4 @@ module.exports = {
   {{operationId}},
   {{/operation}}
   {{/operations}}
-};
+}

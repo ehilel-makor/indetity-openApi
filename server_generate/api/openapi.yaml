@@ -32,6 +32,26 @@ paths:
       tags:
       - identity
       x-eov-operation-handler: controllers/IdentityController
+    post:
+      operationId: createIdentity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/identity_create'
+        description: Insert identity details
+        required: true
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Create identity
+      tags:
+      - identity
+      x-eov-operation-handler: controllers/IdentityController
   /identity/{id}:
     delete:
       operationId: deleteIdentity
@@ -140,6 +160,25 @@ components:
           type: string
         ip_address:
           type: string
+      type: object
+    identity_create:
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        ip_address:
+          type: string
+      required:
+      - email
+      - first_name
+      - gender
+      - ip_address
+      - last_name
       type: object
     identity_update:
       properties:
